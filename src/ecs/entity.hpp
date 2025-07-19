@@ -2,6 +2,7 @@
 #define GAME_ECS_ENTITY_HPP
 
 #include <cstdint>
+#include <limits>
 
 namespace game {
 namespace ecs {
@@ -18,7 +19,7 @@ using Entity = std::uint64_t;
 /**
  * @brief Invalid entity constant representing no entity.
  */
-constexpr Entity INVALID_ENTITY = 0;
+constexpr Entity INVALID_ENTITY = std::numeric_limits<Entity>::max();
 
 /**
  * @brief Maximum number of entities that can exist simultaneously.
