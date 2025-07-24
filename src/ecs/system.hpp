@@ -26,7 +26,7 @@ struct System {
      * @brief Called once per frame to update the system.
      * @param delta Time elapsed since last frame
      */
-    virtual void tick(const float& delta) = 0;
+    virtual void tick(const float delta) = 0;
 };
 
 }//ecs
