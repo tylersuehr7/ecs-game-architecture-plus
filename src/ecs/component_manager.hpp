@@ -2,6 +2,7 @@
 #define GAME_ECS_COMPONENT_MANAGER_HPP
 
 #include "ecs/component_array.hpp"
+#include "ecs/entity_manager.hpp"
 #include "ecs/entity.hpp"
 #include <cassert>
 #include <cstddef>
@@ -37,6 +38,7 @@ public:
     void register_component_array() noexcept {
         const auto index = std::type_index(typeid(T));
         assert(component_types_.find(index) == component_types_.end() && "Component type already registered");
+        assert(next_sequenced_component_type_ < MAX_COMPONENTS && "Too many component types registered");
         component_types_[index] = next_sequenced_component_type_++;
         component_arrays_[index] = std::make_unique<ComponentArray<T>>();
     }

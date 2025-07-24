@@ -47,6 +47,7 @@ public:
     void insert(const Entity entity, T component) noexcept {
         assert(entity_to_index_.find(entity) == entity_to_index_.end() && "Component already exists for entity");
         assert(size_ < MAX_ENTITIES && "Component array is full");
+        assert(entity < MAX_ENTITIES && "Entity ID out of range");
 
         // Put new entry at end and update all mappings
         const std::size_t new_index = size_++;
@@ -57,6 +58,7 @@ public:
 
     void remove(const Entity entity) noexcept {
         assert(entity_to_index_.find(entity) != entity_to_index_.end() && "Component does not exist for entity");
+        assert(size_ > 0 && "Cannot remove from empty component array");
 
         const std::size_t index_of_removed_entity = entity_to_index_[entity];
         const std::size_t index_of_last_element = size_ - 1;
