@@ -7,6 +7,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(
     SOURCES
     src/main.cpp
+    src/ecs/component_array.hpp
+    src/ecs/component_manager.hpp
+    src/ecs/entity_manager.hpp
+    src/ecs/entity.hpp
+    src/ecs/system_manager.hpp
+    src/ecs/system.hpp
+    src/ecs/world.hpp
 )
 
 set(
