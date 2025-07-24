@@ -44,7 +44,7 @@ public:
      * @param entity The entity whose signature changed
      * @param entity_signature The entity's new signature
      */
-    void entity_signature_change(const Entity entity, const Signature entity_signature) noexcept {
+    void entity_signature_changed(const Entity entity, const Signature entity_signature) noexcept {
         for (auto& [index, system] : systems_) {
             const auto& system_signature = signatures_[index];
             if ((entity_signature & system_signature) == system_signature) {
