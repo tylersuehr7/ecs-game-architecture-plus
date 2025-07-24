@@ -27,9 +27,7 @@ namespace ecs {
 public:
     /**
      * @brief Called once per-frame.
-     * Updates all of the underlying systems registered.
-     *
-     * @param delta The delta time
+     * @param delta Time elapsed since last frame
      */
     void tick(const float delta) noexcept {
         for (auto& [_, system] : systems_) {
