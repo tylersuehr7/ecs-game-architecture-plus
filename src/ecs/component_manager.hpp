@@ -13,6 +13,14 @@ namespace game {
 namespace ecs {
 
 /**
+ * @brief Type alias for component type IDs.
+ *
+ * This is needed so that sequential IDs (that represent each Component)
+ * can be stored in the signature bitset appropriately.
+ */
+ using ComponentType = std::size_t;
+
+/**
  * @brief Manages all component types and their storage.
  * 
  * Provides type-safe registration and access to component arrays.
@@ -20,23 +28,25 @@ namespace ecs {
  * allowing runtime component management.
  */
 class ComponentManager {
+    std::unordered_map<std::type_index, ComponentType> component_types_{};
     std::unordered_map<std::type_index, std::unique_ptr<IComponentArray>> component_arrays_{};
+    ComponentType next_sequenced_component_type_{0};
 
 public:
     template<typename T>
     void register_component_array() noexcept {
         const auto index = std::type_index(typeid(T));
-        assert(component_arrays_.find(index) == component_arrays_.end() && "Component array already registered");
-
-        auto component_array = std::make_unique<ComponentArray<T>>();
-        component_arrays_.emplace(index, std::move(component_array));
+        assert(component_types_.find(index) == component_types_.end() && "Component type already registered");
+        component_types_[index] = next_sequenced_component_type_++;
+        component_arrays_[index] = std::make_unique<ComponentArray<T>>();
     }
 
     template<typename T>
-    void unregister_component_array() noexcept {
+    const ComponentType get_component_type() const noexcept {
         const auto index = std::type_index(typeid(T));
-        assert(component_arrays_.find(index) != component_arrays_.end() && "Component array not registered");
-        component_arrays_.erase(index);
+        const auto it = component_types_.find(index);
+        assert(it != component_types_.end() && "Component type not registered");
+        return it->second;
     }
 
     template<typename T>
@@ -74,14 +84,14 @@ private:
     template<typename T>
     ComponentArray<T>* get_component_array() noexcept {
         const auto index = std::type_index(typeid(T));
-        assert(component_arrays_.find(index) != component_arrays_.end() && "Component array not registered");
+        assert(component_types_.find(index) != component_types_.end() && "Component type not registered");
         return static_cast<ComponentArray<T>*>(component_arrays_.at(index).get());
     }
 
     template<typename T>
     const ComponentArray<T>* get_component_array() const noexcept {
         const auto index = std::type_index(typeid(T));
-        assert(component_arrays_.find(index) != component_arrays_.end() && "Component array not registered");
+        assert(component_types_.find(index) != component_types_.end() && "Component type not registered");
         return static_cast<const ComponentArray<T>*>(component_arrays_.at(index).get());
     }
 };
