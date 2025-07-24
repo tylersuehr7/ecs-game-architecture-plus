@@ -135,13 +135,37 @@ public:
     }
 
     /**
-     * @brief Sets the signature for a system.
-     * @tparam T The system type
-     * @param signature The signature representing required components
+     * @brief Sets the signature for a system using component types.
+     * 
+     * This is a convenience method that automatically creates a signature
+     * based on the provided component types and sets it for the specified system.
+     * 
+     * @tparam SystemT The system type
+     * @tparam ComponentTypes The component types required by the system
      */
-    template<typename T>
-    void set_system_signature(const Signature signature) noexcept {
-        system_manager_.set_signature<T>(signature);
+    template<typename SystemT, typename... ComponentTypes>
+    void set_system_signature() noexcept {
+        Signature signature;
+        // C++17 fold expression to set each component bit
+        ((signature.set(component_manager_.get_component_type<ComponentTypes>(), true)), ...);
+        system_manager_.set_signature<SystemT>(signature);
+    }
+
+    /**
+     * @brief Creates a component signature from the specified component types.
+     * 
+     * Utility method that generates a signature with bits set for each
+     * component type provided. Used for creating signatures for queries
+     * or system requirements.
+     * 
+     * @tparam ComponentTypes The component types to include in the signature
+     * @return A signature with bits set for the specified component types
+     */
+    template<typename... ComponentTypes>
+    [[nodiscard]] Signature make_signature() const noexcept {
+        Signature signature;
+        ((signature.set(component_manager_.get_component_type<ComponentTypes>(), true)), ...);
+        return signature;
     }
 
     /**
