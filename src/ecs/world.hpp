@@ -118,7 +118,7 @@ public:
      * @return True if the entity has the component
      */
     template<typename T>
-    bool has_component(const Entity entity) const noexcept {
+    [[nodiscard]] bool has_component(const Entity entity) const noexcept {
         return component_manager_.has_component<T>(entity);
     }
 
@@ -144,7 +144,7 @@ public:
     template<typename SystemT, typename... ComponentTypes>
     void set_system_signature() noexcept {
         Signature signature;
-        // C++17 fold expression to set each component bit
+        // C++17-fold expression to set each component bit
         ((signature.set(component_manager_.get_component_type<ComponentTypes>(), true)), ...);
         system_manager_.set_signature<SystemT>(signature);
     }
@@ -170,7 +170,7 @@ public:
       * @brief Gets the current number of active entities.
       * @return Number of active entities
       */
-    std::uint64_t get_entity_count() const noexcept {
+    [[nodiscard]] std::uint64_t get_entity_count() const noexcept {
         return entity_manager_.get_living_entity_count();
     }
 };

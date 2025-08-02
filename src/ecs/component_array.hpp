@@ -18,7 +18,7 @@ namespace game::ecs {
 class IComponentArray {
 public:
     virtual ~IComponentArray() = default;
-    virtual void entity_destroyed(const Entity entity) = 0;
+    virtual void entity_destroyed(Entity entity) = 0;
 };
 
 /**
@@ -43,7 +43,7 @@ public:
     using const_iterator = typename std::array<T, MAX_ENTITIES>::const_iterator;
 
     void insert(const Entity entity, T component) noexcept {
-        assert(entity_to_index_.find(entity) == entity_to_index_.end() && "Component already exists for entity");
+        assert(!entity_to_index_.contains(entity) && "Component already exists for entity");
         assert(size_ < MAX_ENTITIES && "Component array is full");
         assert(entity < MAX_ENTITIES && "Entity ID out of range");
 
@@ -55,7 +55,7 @@ public:
     }
 
     void remove(const Entity entity) noexcept {
-        assert(entity_to_index_.find(entity) != entity_to_index_.end() && "Component does not exist for entity");
+        assert(entity_to_index_.contains(entity) && "Component does not exist for entity");
         assert(size_ > 0 && "Cannot remove from empty component array");
 
         const std::size_t index_of_removed_entity = entity_to_index_[entity];
@@ -79,7 +79,7 @@ public:
     }
 
     const T& get(const Entity entity) const noexcept {
-        assert(entity_to_index_.find(entity) != entity_to_index_.end() && "Component does not exist for entity");
+        assert(entity_to_index_.contains(entity) && "Component does not exist for entity");
         return components_[entity_to_index_.at(entity)];
     }
 
@@ -88,8 +88,8 @@ public:
         return components_[entity_to_index_[entity]];
     }
 
-    bool has(const Entity entity) const noexcept {
-        return entity_to_index_.find(entity) != entity_to_index_.end();
+    [[nodiscard]] bool has(const Entity entity) const noexcept {
+        return entity_to_index_.contains(entity);
     }
 
     // Iterator support for range-based for loops
@@ -126,12 +126,12 @@ public:
         return components_.data();
     }
 
-    std::size_t size() const noexcept {
+    [[nodiscard]] std::size_t size() const noexcept {
         return size_;
     }
 
     void entity_destroyed(const Entity entity) override {
-        if (entity_to_index_.find(entity) != entity_to_index_.end()) {
+        if (entity_to_index_.contains(entity)) {
             remove(entity);
         }
     }

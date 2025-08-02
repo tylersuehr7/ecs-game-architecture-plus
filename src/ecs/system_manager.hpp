@@ -71,7 +71,7 @@ public:
         static_assert(std::is_base_of_v<System, T>, "T must inherit System");
 
         const auto index = std::type_index(typeid(T));
-        assert(systems_.find(index) == systems_.end() && "System is already registered");
+        assert(!systems_.contains(index) && "System is already registered");
 
         auto system = std::make_unique<T>(std::forward<Args>(args)...);
         auto& system_ref = *system;
@@ -139,7 +139,7 @@ public:
         static_assert(std::is_base_of_v<System, T>, "T must inherit System");
 
         const auto index = std::type_index(typeid(T));
-        assert(systems_.find(index) != systems_.end() && "System is not registered");
+        assert(systems_.contains(index) && "System is not registered");
 
         signatures_[index] = signature;
     }

@@ -35,18 +35,16 @@ public:
     template<typename T>
     void register_component_array() noexcept {
         const auto index = std::type_index(typeid(T));
-        assert(component_types_.find(index) == component_types_.end() && "Component type already registered");
+        assert(!component_types_.contains(index) && "Component type already registered");
         assert(next_sequenced_component_type_ < MAX_COMPONENTS && "Too many component types registered");
         component_types_[index] = next_sequenced_component_type_++;
         component_arrays_[index] = std::make_unique<ComponentArray<T>>();
     }
 
     template<typename T>
-    const ComponentType get_component_type() const noexcept {
+    [[nodiscard]] ComponentType get_component_type() const noexcept {
         const auto index = std::type_index(typeid(T));
-        const auto it = component_types_.find(index);
-        assert(it != component_types_.end() && "Component type not registered");
-        return it->second;
+        return component_types_.at(index);
     }
 
     template<typename T>
@@ -70,7 +68,7 @@ public:
     }
 
     template<typename T>
-    bool has_component(const Entity entity) const noexcept {
+    [[nodiscard]] bool has_component(const Entity entity) const noexcept {
         return get_component_array<T>()->has(entity);
     }
 
@@ -84,14 +82,14 @@ private:
     template<typename T>
     ComponentArray<T>* get_component_array() noexcept {
         const auto index = std::type_index(typeid(T));
-        assert(component_types_.find(index) != component_types_.end() && "Component type not registered");
+        assert(component_types_.contains(index) && "Component type not registered");
         return static_cast<ComponentArray<T>*>(component_arrays_.at(index).get());
     }
 
     template<typename T>
     const ComponentArray<T>* get_component_array() const noexcept {
         const auto index = std::type_index(typeid(T));
-        assert(component_types_.find(index) != component_types_.end() && "Component type not registered");
+        assert(component_types_.contains(index) && "Component type not registered");
         return static_cast<const ComponentArray<T>*>(component_arrays_.at(index).get());
     }
 };

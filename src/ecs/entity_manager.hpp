@@ -67,7 +67,7 @@ public:
         signatures_[entity] = signature;
     }
 
-    const Signature& get_signature(const Entity entity) const noexcept {
+    [[nodiscard]] const Signature& get_signature(const Entity entity) const noexcept {
         assert(entity < MAX_ENTITIES && "Entity out-of-range");
         return signatures_[entity]; 
     }
@@ -77,12 +77,12 @@ public:
         return signatures_[entity];
     }
 
-    std::uint64_t get_living_entity_count() const noexcept {
+    [[nodiscard]] std::uint64_t get_living_entity_count() const noexcept {
         return living_entity_count_;
     }
 
 private:
-    inline void initialize_queue_with_all_possible_entities() noexcept {
+    void initialize_queue_with_all_possible_entities() noexcept {
         for (Entity entity = 0; entity < MAX_ENTITIES; entity++) {
             available_entities_.push(entity);
         }
