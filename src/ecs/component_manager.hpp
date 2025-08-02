@@ -36,7 +36,7 @@ public:
     void register_component_array() noexcept {
         const auto index = std::type_index(typeid(T));
         assert(!component_types_.contains(index) && "Component type already registered");
-        assert(next_sequenced_component_type_ < MAX_COMPONENTS && "Too many component types registered");
+        assert(next_sequenced_component_type_ < MAX_COMPONENT_TYPES && "Too many component types registered");
         component_types_[index] = next_sequenced_component_type_++;
         component_arrays_[index] = std::make_unique<ComponentArray<T>>();
     }

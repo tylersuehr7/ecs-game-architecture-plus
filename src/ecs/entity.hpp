@@ -23,7 +23,12 @@ constexpr Entity INVALID_ENTITY = std::numeric_limits<Entity>::max();
 /**
  * @brief Maximum number of entities that can exist simultaneously.
  */
- constexpr std::uint64_t MAX_ENTITIES = 5000;
+constexpr std::uint64_t MAX_ENTITIES = 5000;
+
+/**
+ * @brief Maximum number of components that can exist simultaneously on an entity.
+ */
+constexpr std::uint64_t MAX_COMPONENT_TYPES = 32;
 
 }
 

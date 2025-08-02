@@ -11,17 +11,12 @@
 namespace game::ecs {
 
 /**
- * @brief Maximum number of different component types.
- */
-constexpr std::size_t MAX_COMPONENTS = 32;
-
-/**
  * @brief Signature represents which components an entity has.
  * 
  * Uses a bitset for efficient storage and operations.
  * Each bit represents whether an entity has a specific component type.
  */
-using Signature = std::bitset<MAX_COMPONENTS>;
+using Signature = std::bitset<MAX_COMPONENT_TYPES>;
 
 /**
  * @brief Manages entity creation, destruction, and signatures.
