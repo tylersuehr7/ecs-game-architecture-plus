@@ -4,7 +4,6 @@
 #include "entity.hpp"
 #include <array>
 #include <cassert>
-#include <cstddef>
 #include <unordered_map>
 #include <utility>
 

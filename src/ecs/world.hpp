@@ -5,7 +5,6 @@
 #include "ecs/entity.hpp"
 #include "ecs/entity_manager.hpp"
 #include "ecs/system_manager.hpp"
-#include <cstdint>
 
 namespace game::ecs {
 

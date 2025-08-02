@@ -5,7 +5,6 @@
 #include "ecs/entity_manager.hpp"
 #include "ecs/entity.hpp"
 #include <cassert>
-#include <cstddef>
 #include <memory>
 #include <typeindex>
 #include <unordered_map>
