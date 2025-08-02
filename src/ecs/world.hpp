@@ -144,7 +144,6 @@ public:
     template<typename SystemT, typename... ComponentTypes>
     void set_system_signature() noexcept {
         Signature signature;
-        // C++17-fold expression to set each component bit
         ((signature.set(component_manager_.get_component_type<ComponentTypes>(), true)), ...);
         system_manager_.set_signature<SystemT>(signature);
     }

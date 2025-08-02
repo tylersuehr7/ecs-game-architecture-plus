@@ -29,7 +29,7 @@ public:
      * @param delta Time elapsed since last frame
      */
     void tick(const float delta) noexcept {
-        for (auto& [_, system] : systems_) {
+        for (const auto &system: systems_ | std::views::values) {
             system->tick(delta);
         }
     }
@@ -43,8 +43,7 @@ public:
      */
     void entity_signature_changed(const Entity entity, const Signature entity_signature) noexcept {
         for (auto& [index, system] : systems_) {
-            const auto& system_signature = signatures_[index];
-            if ((entity_signature & system_signature) == system_signature) {
+            if (const auto& system_signature = signatures_[index]; (entity_signature & system_signature) == system_signature) {
                 // Entity signature matches system signature (add to set)
                 system->entities_.insert(entity);
             } else {
@@ -61,7 +60,7 @@ public:
      * @param entity The entity that was destroyed
      */
     void entity_destroyed(const Entity entity) noexcept {
-        for (auto& [_, system] : systems_) {
+        for (const auto &system: systems_ | std::views::values) {
             system->entities_.erase(entity);
         }
     }
@@ -86,7 +85,7 @@ public:
         static_assert(std::is_base_of_v<System, T>, "T must inherit System");
 
         const auto index = std::type_index(typeid(T));
-        assert(systems_.find(index) != systems_.end() && "System is not registered");
+        assert(systems_.contains(index) && "System is not registered");
 
         systems_.erase(index);
         signatures_.erase(index);

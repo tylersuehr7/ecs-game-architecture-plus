@@ -6,6 +6,7 @@
 #include "ecs/entity.hpp"
 #include <cassert>
 #include <memory>
+#include <ranges>
 #include <typeindex>
 #include <unordered_map>
 
@@ -73,7 +74,7 @@ public:
     }
 
     void entity_destroyed(const Entity entity) noexcept {
-        for (auto& [_, array] : component_arrays_) {
+        for (const auto &array: component_arrays_ | std::views::values) {
             array->entity_destroyed(entity);
         }
     }
