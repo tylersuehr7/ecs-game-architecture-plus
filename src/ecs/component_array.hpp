@@ -31,7 +31,7 @@ public:
  * Includes iterator support.
  */
 template<typename T>
-class ComponentArray : public IComponentArray {
+class ComponentArray final : public IComponentArray {
     std::array<T, MAX_ENTITIES> components_{};
     std::unordered_map<Entity, std::size_t> entity_to_index_{};
     std::unordered_map<std::size_t, Entity> index_to_entity_{};
