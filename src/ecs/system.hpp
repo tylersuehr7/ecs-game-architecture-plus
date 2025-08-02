@@ -4,8 +4,7 @@
 #include "entity.hpp"
 #include <set>
 
-namespace game {
-namespace ecs {
+namespace game::ecs {
 
 /**
  * @brief Base class for all systems in the ECS.
@@ -29,7 +28,6 @@ struct System {
     virtual void tick(const float delta) = 0;
 };
 
-}//ecs
-}//game
+}
 
 #endif//GAME_ECS_SYSTEM_HPP

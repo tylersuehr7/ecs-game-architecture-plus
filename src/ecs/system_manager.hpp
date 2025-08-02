@@ -10,8 +10,7 @@
 #include <typeindex>
 #include <unordered_map>
 
-namespace game {
-namespace ecs {
+namespace game::ecs {
 
 /**
  * @brief Manages all systems and their entity associations.
@@ -146,7 +145,6 @@ public:
     }
  };
 
-}//ecs
-}//game
+}
 
 #endif//GAME_ECS_SYSTEM_MANAGER_HPP

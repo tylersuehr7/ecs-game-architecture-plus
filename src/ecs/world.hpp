@@ -7,8 +7,7 @@
 #include "ecs/system_manager.hpp"
 #include <cstdint>
 
-namespace game {
-namespace ecs {
+namespace game::ecs {
 
 /**
  * @brief Main ECS coordinator that manages entities, components, and systems.
@@ -177,7 +176,6 @@ public:
     }
 };
 
-}//ecs
-}//game
+}
 
 #endif//GAME_ECS_WORLD_HPP

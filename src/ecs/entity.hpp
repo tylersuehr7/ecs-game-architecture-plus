@@ -4,8 +4,7 @@
 #include <cstdint>
 #include <limits>
 
-namespace game {
-namespace ecs {
+namespace game::ecs {
 
 /**
  * @brief Entity represents a unique identifier in the ECS system.
@@ -26,7 +25,6 @@ constexpr Entity INVALID_ENTITY = std::numeric_limits<Entity>::max();
  */
  constexpr std::uint64_t MAX_ENTITIES = 5000;
 
-}//ecs
-}//game
+}
 
 #endif//GAME_ECS_ENTITY_HPP

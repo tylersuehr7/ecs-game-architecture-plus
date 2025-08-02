@@ -10,8 +10,7 @@
 #include <typeindex>
 #include <unordered_map>
 
-namespace game {
-namespace ecs {
+namespace game::ecs {
 
 /**
  * @brief Type alias for component type IDs.
@@ -98,7 +97,6 @@ private:
     }
 };
 
-}//ecs
-}//game
+}
 
 #endif//GAME_ECS_COMPONENT_MANAGER_HPP

@@ -8,8 +8,7 @@
 #include <unordered_map>
 #include <utility>
 
-namespace game {
-namespace ecs {
+namespace game::ecs {
 
 /**
  * @brief Interface for type-erased component arrays.
@@ -139,7 +138,6 @@ public:
     }
 };
 
-}//ecs
-}//game
+}
 
 #endif//GAME_ECS_COMPONENT_ARRAY_HPP

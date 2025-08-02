@@ -8,8 +8,7 @@
 #include <array>
 #include <cassert>
 
-namespace game {
-namespace ecs {
+namespace game::ecs {
 
 /**
  * @brief Maximum number of different component types.
@@ -90,7 +89,6 @@ private:
     }
 };
 
-}//ecs
-}//game
+}
 
 #endif//GAME_ECS_ENTITY_MANAGER_HPP
